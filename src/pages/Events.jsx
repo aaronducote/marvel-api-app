@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, NavLink } from 'react-router-dom'
 import styled from '@emotion/styled'
 import CryptoJS from 'crypto-js';
 
@@ -23,6 +23,20 @@ const PageStyle = styled.div`
         transition: color 0.3s ease-in-out;
         color: black;
         height:25vw;
+  }
+`;
+
+const H3Style = styled.h3`
+    font-size: 60px;
+    font-family: 'Fredericka the Great', cursive;
+
+  a {
+    color: #cb3032;
+    text-decoration: none; 
+    
+    &:hover {
+      color: #f9c06b; 
+    }
   }
 `;
 
@@ -79,7 +93,7 @@ export default function SearchEvent() {
                     <h1>Results:</h1>
                     {data.data.results.map((event, index) => (
                         <div key={index}>
-                            <h3>Name: {event.title}</h3>
+                            <H3Style><NavLink to={`/events/${event.id}`}>{event.title}</NavLink></H3Style>
                             <img
                                 src={`${event.thumbnail.path}.${event.thumbnail.extension}`}
                                 alt={`${event.title} Image`}

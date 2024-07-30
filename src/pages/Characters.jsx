@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, NavLink } from 'react-router-dom'
 import styled from '@emotion/styled'
 import CryptoJS from 'crypto-js';
 
@@ -23,6 +23,20 @@ const PageStyle = styled.div`
         transition: color 0.3s ease-in-out;
         color: black;
         height:25vw;
+  }
+`;
+
+const H3Style = styled.h3`
+    font-size: 60px;
+    font-family: 'Fredericka the Great', cursive;
+
+  a {
+    color: #cb3032;
+    text-decoration: none; 
+    
+    &:hover {
+      color: #f9c06b; 
+    }
   }
 `;
 
@@ -54,6 +68,7 @@ export default function SearchCharacter() {
                     `https://gateway.marvel.com:443/v1/public/characters?orderBy=name&apikey=8bc86d7d5d3e35ead39c6b0a737d1d56&hash=${hash}&ts=${timestamp}&nameStartsWith=${searchTerm}`
                 );
                 const result = await response.json();
+                console.log(result);
                 setData(result);
             }
         };
@@ -81,7 +96,7 @@ export default function SearchCharacter() {
                     <h1>Results:</h1>
                     {data.data.results.map((character, index) => (
                         <div key={index}>
-                            <h3>Name: {character.name}</h3>
+                            <H3Style><NavLink to={`/characters/${character.id}`}>{character.name}</NavLink></H3Style>
                             <img
                                 src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
                                 alt={`${character.name} Image`}

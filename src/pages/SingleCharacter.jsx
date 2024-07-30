@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { NavLink, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams, NavLink } from 'react-router-dom'
 import styled from '@emotion/styled'
 import CryptoJS from 'crypto-js';
 
@@ -40,13 +40,28 @@ const H3Style = styled.h3`
   }
 `;
 
-// Allows a user to search for a list of series
-export default function SearchSeries() {
+const H2Style = styled.h2`
+    font-size: 40px;
+    font-family: 'Fredericka the Great', cursive;
+
+  a {
+    color: #cb3032;
+    text-decoration: none; 
+    
+    &:hover {
+      color: #f9c06b; 
+    }
+  }
+`;
+
+// Allows a user to view a single character
+export default function SingleCharacter() {
+    const { id } = useParams();
     const [hash, setHash] = useState('');
     const [timestamp, setTimestamp] = useState('');
     const [data, setData] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
 
+    // Keys value, which is API private key and public key together
     const keysValue = '4f175da1e058b20852cc3d3f920406efdd458c1b8bc86d7d5d3e35ead39c6b0a737d1d56';
 
     useEffect(() => {
@@ -59,45 +74,36 @@ export default function SearchSeries() {
         setHash(newHash);
     }, [keysValue]);
 
+    // Fetch the API call
     useEffect(() => {
         const fetchData = async () => {
-            if (hash && timestamp && searchTerm) {
+            if (hash && timestamp && id) {
                 const response = await fetch(
-                    `https://gateway.marvel.com:443/v1/public/series?orderBy=title&apikey=8bc86d7d5d3e35ead39c6b0a737d1d56&hash=${hash}&ts=${timestamp}&titleStartsWith=${searchTerm}`
+                    `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=8bc86d7d5d3e35ead39c6b0a737d1d56&hash=${hash}&ts=${timestamp}`
                 );
                 const result = await response.json();
+                console.log(result);
                 setData(result);
             }
         };
 
         fetchData();
-    }, [hash, timestamp, searchTerm]);
+    }, [hash, timestamp, id]);
 
-    const handleInputChange = (e) => {
-        setSearchTerm(e.target.value);
-    };
-
-    // Display series data on web page with search box
+    // Display characters data on web page with search box
     return (
         <div>
             <PageStyle>
-            <h1>Search Marvel Series</h1>
-            <StyledInput
-                type="text"
-                value={searchTerm}
-                onChange={handleInputChange}
-                placeholder="Series"
-            />
             {data && data.data && data.data.results && (
                 <div>
-                    <h1>Results:</h1>
-                    {data.data.results.map((series, index) => (
+                    {data.data.results.map((character, index) => (
                         <div key={index}>
-                            <H3Style><NavLink to={`/series/${series.id}`}>{series.title}</NavLink></H3Style>
+                            <H3Style><NavLink to={`/characters/${character.id}`}>{character.name}</NavLink></H3Style>
                             <img
-                                src={`${series.thumbnail.path}.${series.thumbnail.extension}`}
-                                alt={`${series.title} Image`}
+                                src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
+                                alt={`${character.name} Image`}
                             />
+                            <H2Style>{character.description}</H2Style>
                         </div>
                     ))}
                 </div>

@@ -9,7 +9,7 @@ const StyledRoot = styled.div`
   flex-direction:column;
   min-height: 100vh;
   color: #cb3032;
-  font-family: "Kode Mono", monospace;
+  font-family: 'Fredericka the Great', cursive;
 `;
 
 // Header
@@ -29,6 +29,7 @@ const NavButton = styled.button`
   justify-content: center;
   a {
     text-decoration: none;
+    font-family: 'Fredericka the Great', cursive;
     font-weight: bold;
     font-size: 40px;
     transition: color 0.3s ease-in-out;
