@@ -23,6 +23,7 @@ const PageStyle = styled.div`
         transition: color 0.3s ease-in-out;
         color: black;
         height:25vw;
+        padding-bottom: 30px;
   }
 `;
 
@@ -35,10 +36,17 @@ const H3Style = styled.h3`
     text-decoration: none; 
     
     &:hover {
-      color: #f9c06b; 
+      color: black;
     }
   }
 `;
+
+const EventContainer = styled.div`
+    background-color: #ff8044;
+    border-radius: 50px;
+    border: 6px solid black;
+    bottom-padding: 10px;
+`
 
 // Allows a user to search for a list of events
 export default function SearchEvent() {
@@ -93,11 +101,13 @@ export default function SearchEvent() {
                     <h1>Results:</h1>
                     {data.data.results.map((event, index) => (
                         <div key={index}>
+                            <EventContainer>
                             <H3Style><NavLink to={`/events/${event.id}`}>{event.title}</NavLink></H3Style>
                             <img
                                 src={`${event.thumbnail.path}.${event.thumbnail.extension}`}
                                 alt={`${event.title} Image`}
                             />
+                            </EventContainer>
                         </div>
                     ))}
                 </div>

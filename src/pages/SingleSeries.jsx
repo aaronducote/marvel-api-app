@@ -3,18 +3,6 @@ import { useParams, useSearchParams, NavLink } from 'react-router-dom'
 import styled from '@emotion/styled'
 import CryptoJS from 'crypto-js';
 
-// Input box styling
-const StyledInput = styled.input`
-    font-family: "Kode Mono", monospace;
-    flex: 1;
-    padding: 10px;
-    font-size: 25px; 
-    width: 20vw;
-    background-color:#cb3032;
-    color: #f9c06b;
-    text-align: center;
-`;
-
 const PageStyle = styled.div`
     img {
         text-decoration: none;
@@ -35,24 +23,49 @@ const H3Style = styled.h3`
     text-decoration: none; 
     
     &:hover {
-      color: #f9c06b; 
+      color: #44fbff;
     }
   }
 `;
 
-const H2Style = styled.h2`
-    font-size: 40px;
-    font-family: 'Fredericka the Great', cursive;
 
-  a {
-    color: #cb3032;
-    text-decoration: none; 
+const SeriesContainer = styled.div`
+    background-color: #ff8c8c;
+    border-radius: 50px;
+    border: 6px solid #44fbff;
+    display: flex;
+    flex-direction: row;
+`
+
+const ImgContainer = styled.div`
+    text-align: center;
+    width: 40vw;
     
-    &:hover {
-      color: #f9c06b; 
+    img {
+        width: 25vw;
     }
-  }
-`;
+    border-radius: 50px;
+    width: 100vw;
+    padding-bottom: 2vw;
+`
+
+
+const CharactersContainer = styled.div`
+    width: 100vw;
+`
+
+const ComicsContainer = styled.div`
+    width: 100vw;
+`
+
+const H4Style = styled.h4`
+    font-size: 100px;
+    color: #44fbff;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+`
+
+
 
 // Allows a user to view a single series
 export default function SingleSeries() {
@@ -98,12 +111,39 @@ export default function SingleSeries() {
                 <div>
                     {data.data.results.map((series, index) => (
                         <div key={index}>
+                            <SeriesContainer>
+                                <ImgContainer>
                             <H3Style><NavLink to={`/series/${series.id}`}>{series.title}</NavLink></H3Style>
                             <img
                                 src={`${series.thumbnail.path}.${series.thumbnail.extension}`}
                                 alt={`${series.title} Image`}
-                            />
-                            <H2Style>{series.description}</H2Style>
+                                />
+                                </ImgContainer>
+                            </SeriesContainer>
+                            <SeriesContainer>
+                                <CharactersContainer>
+                                    <H4Style>Characters</H4Style>
+                                    {series.characters.items.map((item, index) => (
+                                        <H3Style key={index}>
+                                            <NavLink to={`${item.resourceURI.slice(28).replace('/public', '')}`}>
+                                                {item.name}
+                                            </NavLink>
+                                        </H3Style>
+                                    ))}
+                                </CharactersContainer>
+                            </SeriesContainer>
+                            <SeriesContainer>
+                                <ComicsContainer>
+                                    <H4Style>Comics</H4Style>
+                                    {series.comics.items.map((item, index) => (
+                                        <H3Style key={index}>
+                                            <NavLink to={`${item.resourceURI.slice(28).replace('/public', '')}`}>
+                                                {item.name}
+                                            </NavLink>
+                                        </H3Style>
+                                    ))}
+                                </ComicsContainer>
+                            </SeriesContainer>
                         </div>
                     ))}
                 </div>

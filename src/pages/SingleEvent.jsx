@@ -3,17 +3,6 @@ import { useParams, useSearchParams, NavLink } from 'react-router-dom'
 import styled from '@emotion/styled'
 import CryptoJS from 'crypto-js';
 
-// Input box styling
-const StyledInput = styled.input`
-    font-family: "Kode Mono", monospace;
-    flex: 1;
-    padding: 10px;
-    font-size: 25px; 
-    width: 20vw;
-    background-color:#cb3032;
-    color: #f9c06b;
-    text-align: center;
-`;
 
 const PageStyle = styled.div`
     img {
@@ -35,7 +24,7 @@ const H3Style = styled.h3`
     text-decoration: none; 
     
     &:hover {
-      color: #f9c06b; 
+      color: black;
     }
   }
 `;
@@ -49,10 +38,51 @@ const H2Style = styled.h2`
     text-decoration: none; 
     
     &:hover {
-      color: #f9c06b; 
+      color: black;
     }
   }
 `;
+
+const EventContainer = styled.div`
+    background-color: #ff8044;
+    border-radius: 50px;
+    border: 6px solid black;
+    bottom-padding: 10px;
+    display: flex;
+    flex-direction: row;
+`
+
+const ImgContainer = styled.div`
+    text-align: center;
+    padding-left: 2vw;
+    width: 40vw;
+    padding-right: 10vw;
+    
+    img {
+        width: 25vw;
+    }
+    border-radius: 50px;
+`
+const DescContainer = styled.div`
+    text-align: center;
+    width: 40vw;
+    padding-right: 5vw;
+    border-radius: 50px;
+    height: 50vh;
+    padding-top: 5vw;
+    padding-bottom: 200px;
+`
+
+const CharactersContainer = styled.div`
+    width: 100vw;
+`
+
+const H4Style = styled.h4`
+    font-size: 100px;
+    color: black;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+`
 
 // Allows a user to view for a single event
 export default function SingleEvent() {
@@ -98,12 +128,28 @@ export default function SingleEvent() {
                 <div>
                     {data.data.results.map((event, index) => (
                         <div key={index}>
+                            <EventContainer>
+                                <ImgContainer>
                             <H3Style><NavLink to={`/events/${event.id}`}>{event.title}</NavLink></H3Style>
                             <img
                                 src={`${event.thumbnail.path}.${event.thumbnail.extension}`}
                                 alt={`${event.title} Image`}
-                            />
-                            <H2Style>{event.description}</H2Style>
+                                />
+                            </ImgContainer>
+                            <DescContainer><H2Style>{event.description}</H2Style></DescContainer>
+                            </EventContainer>
+                            <EventContainer>
+                                <CharactersContainer>
+                                    <H4Style>Characters</H4Style>
+                                    {event.characters.items.map((item, index) => (
+                                        <H3Style key={index}>
+                                            <NavLink to={`${item.resourceURI.slice(28).replace('/public', '')}`}>
+                                                {item.name}
+                                            </NavLink>
+                                        </H3Style>
+                                    ))}
+                                </CharactersContainer>
+                            </EventContainer>
                         </div>
                     ))}
                 </div>

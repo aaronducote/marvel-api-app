@@ -23,6 +23,7 @@ const PageStyle = styled.div`
         transition: color 0.3s ease-in-out;
         color: black;
         height:25vw;
+        padding-bottom: 30px;
   }
 `;
 
@@ -35,10 +36,17 @@ const H3Style = styled.h3`
     text-decoration: none; 
     
     &:hover {
-      color: #f9c06b; 
+      color: #975ebd;
     }
   }
 `;
+
+const CharContainer = styled.div`
+    background-color: #78d9fb;
+    border-radius: 50px;
+    border: 6px solid #975ebd;
+    bottom-padding: 10px;
+`
 
 // Allows a user to search for a list of characters
 export default function SearchCharacter() {
@@ -96,11 +104,13 @@ export default function SearchCharacter() {
                     <h1>Results:</h1>
                     {data.data.results.map((character, index) => (
                         <div key={index}>
+                            <CharContainer>
                             <H3Style><NavLink to={`/characters/${character.id}`}>{character.name}</NavLink></H3Style>
                             <img
                                 src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
                                 alt={`${character.name} Image`}
                             />
+                            </CharContainer>
                         </div>
                     ))}
                 </div>

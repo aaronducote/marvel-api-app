@@ -23,6 +23,7 @@ const PageStyle = styled.div`
         transition: color 0.3s ease-in-out;
         color: black;
         height:25vw;
+        padding-bottom: 30px;
   }
 `;
 
@@ -35,10 +36,17 @@ const H3Style = styled.h3`
     text-decoration: none; 
     
     &:hover {
-      color: #f9c06b; 
+      color: #44fbff;
     }
   }
 `;
+
+const SeriesContainer = styled.div`
+    background-color: #ff8c8c;
+    border-radius: 50px;
+    border: 6px solid #44fbff;
+    bottom-padding: 10px;
+`
 
 // Allows a user to search for a list of series
 export default function SearchSeries() {
@@ -93,11 +101,13 @@ export default function SearchSeries() {
                     <h1>Results:</h1>
                     {data.data.results.map((series, index) => (
                         <div key={index}>
+                            <SeriesContainer>
                             <H3Style><NavLink to={`/series/${series.id}`}>{series.title}</NavLink></H3Style>
                             <img
                                 src={`${series.thumbnail.path}.${series.thumbnail.extension}`}
                                 alt={`${series.title} Image`}
                             />
+                            </SeriesContainer>
                         </div>
                     ))}
                 </div>

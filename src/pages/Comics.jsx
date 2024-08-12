@@ -23,6 +23,7 @@ const PageStyle = styled.div`
         transition: color 0.3s ease-in-out;
         color: black;
         height:25vw;
+        padding-bottom: 30px;
   }
 `;
 
@@ -35,10 +36,17 @@ const H3Style = styled.h3`
     text-decoration: none; 
     
     &:hover {
-      color: #f9c06b; 
+      color: #4464ff;
     }
   }
 `;
+
+const ComicContainer = styled.div`
+    background-color: #44ff46;
+    border-radius: 50px;
+    border: 6px solid #4464ff;
+    bottom-padding: 10px;
+`
 
 // Allows a user to search for a list of comics
 export default function SearchComic() {
@@ -93,11 +101,13 @@ export default function SearchComic() {
                     <h1>Results:</h1>
                     {data.data.results.map((comic, index) => (
                         <div key={index}>
+                            <ComicContainer>
                             <H3Style><NavLink to={`/comics/${comic.id}`}>{comic.title}</NavLink></H3Style>
                             <img
                                 src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
                                 alt={`${comic.title} Image`}
                             />
+                            </ComicContainer>
                         </div>
                     ))}
                 </div>
