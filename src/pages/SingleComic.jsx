@@ -62,6 +62,7 @@ const ImgContainer = styled.div`
         width: 25vw;
     }
     border-radius: 50px;
+    padding-bottom: 50px;
 `
 const DescContainer = styled.div`
     text-align: center;
